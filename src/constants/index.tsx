@@ -1,6 +1,2 @@
-import { TranslateConstants, TranslateKey } from './TranslateConstants'
-
-export {
-    TranslateKey,
-    TranslateConstants,
-}
+export { TranslateKey, TranslateConstants, } from './TranslateConstants'
+export { ScreensConstants } from './ScreenConstants'

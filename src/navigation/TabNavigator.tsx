@@ -6,19 +6,19 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { TabConstants } from '../constants/TabConstants';
 import { Label } from '../components/atoms';
-import { Routes, ScreenName } from '.';
+import { ScreenName } from '.';
 import { colors, CustomThemeType } from '../shared/styles/colors';
 import { useTheme } from 'src/shared/styles/ThemeProvider';
 import { isIOS, isTab, normalize } from 'src/shared/utils';
 import { useThemeAwareObject } from 'src/shared/styles/useThemeAware';
-import {MainScreen} from 'src/components/screens/MainScreen'
+import AppNavigator from './AppNavigator';
 
 const Tab = createBottomTabNavigator<ScreenName>();
 
 const TabNavigator = () => {
     return (
         <Tab.Navigator screenOptions={{ headerShown: false }} initialRouteName={TabConstants.MainScreen} tabBar={props => <CustomTabBar {...props} />}>
-            <Tab.Screen name={TabConstants.MainScreen} component={MainScreen} />
+            <Tab.Screen name={TabConstants.MainScreen} component={AppNavigator} />
         </Tab.Navigator>
     );
 };

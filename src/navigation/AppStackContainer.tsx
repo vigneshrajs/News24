@@ -6,9 +6,9 @@ import {
   createStackNavigator,
   StackNavigationOptions,
 } from '@react-navigation/stack';
-import { ScreenList, Routes } from 'src/navigation';
+import { ScreenList } from 'src/navigation';
 import { ScreensConstants } from 'src/constants';
-import { Label } from 'src/components/atoms';
+import TabNavigator from './TabNavigator';
 
 const Stack = createStackNavigator<ScreenList>();
 
@@ -21,12 +21,11 @@ const defaultScreenOptions: StackNavigationOptions = {
 const AppStackContainer = () => {
   return (
     <NavigationContainer>
-      <Label children={'Showing ::::::'}/>
       <Stack.Navigator
         screenOptions={defaultScreenOptions}>
         <Stack.Screen
-          name={ScreensConstants.MAIN_SCREEN}
-          component={Routes.MainScreen}
+          name={ScreensConstants.HOME_SCREEN}
+          component={TabNavigator}
         />
       </Stack.Navigator>
     </NavigationContainer>

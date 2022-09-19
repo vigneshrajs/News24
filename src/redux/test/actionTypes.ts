@@ -1,0 +1,1 @@
+export const MULTIPLY_FIVE = 'MULTIPLY_FIVE';

@@ -2,6 +2,7 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import React from 'react';
 import { Header } from 'src/components/molecules';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
+import { colors } from 'src/shared/styles/colors';
 
 type ScreenContainerProps = {
     children: any,
@@ -29,5 +30,6 @@ export const ScreenContainer = ({
 const style = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: colors.white
     }
 })

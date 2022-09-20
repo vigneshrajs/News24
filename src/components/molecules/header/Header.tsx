@@ -68,6 +68,7 @@ export const Header: FunctionComponent<HeaderProps> = ({
 const createStyles = (theme: CustomThemeType) =>
     StyleSheet.create({
         containerStyle: {
+            backgroundColor: colors.white,
             height: 55,
             paddingHorizontal: 20,
             flexDirection: 'row',

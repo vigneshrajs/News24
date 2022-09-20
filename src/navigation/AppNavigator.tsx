@@ -6,7 +6,7 @@ import {
   createStackNavigator,
   StackNavigationOptions,
 } from '@react-navigation/stack';
-import { MainScreen } from 'src/components/screens/MainScreen';
+import { MainScreen } from 'src/components/screens/mainScreen/MainScreen';
 
 const defaultScreenOptions: StackNavigationOptions = {
   gestureEnabled: false,

@@ -13,3 +13,4 @@ export const Styles = {
   text: textStyles,
 };
 export { ImagesName } from 'src/shared/styles/images'
+export { getSvgImages, GetSVGProps } from 'src/shared/styles/svgImages'

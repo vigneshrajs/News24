@@ -4,21 +4,44 @@ import {
     createBottomTabNavigator,
     BottomTabBarProps,
 } from '@react-navigation/bottom-tabs';
-import { TabConstants } from '../constants/TabConstants';
 import { Label } from '../components/atoms';
 import { ScreenName } from '.';
 import { colors, CustomThemeType } from '../shared/styles/colors';
 import { useTheme } from 'src/shared/styles/ThemeProvider';
-import { isIOS, isTab, normalize } from 'src/shared/utils';
+import { isTab, normalize } from 'src/shared/utils';
 import { useThemeAwareObject } from 'src/shared/styles/useThemeAware';
-import AppNavigator from './AppNavigator';
+import { getSvgImages, ImagesName } from 'src/shared/styles';
+import { MainScreen } from 'src/components/screens/mainScreen/MainScreen'
+import { SportsScreen } from 'src/components/screens/sportsScreen/SportsScreen'
+import { InteractionScreen } from 'src/components/screens/interaction/InteractionScreen'
+import { TranslateConstants, TranslateKey } from 'src/constants';
 
 const Tab = createBottomTabNavigator<ScreenName>();
 
+const useTabHooks = () => {
+    const CONST_MAIN = TranslateConstants({ key: TranslateKey.TAB_MAIN });
+    const CONST_SPORTS = TranslateConstants({ key: TranslateKey.TAB_SPORTS });
+    const CONST_INTERACTION = TranslateConstants({ key: TranslateKey.TAB_INTERACTION });
+
+    const tabConstants = {
+        CONST_MAIN,
+        CONST_SPORTS,
+        CONST_INTERACTION,
+    }
+
+    return {
+        tabConstants
+    }
+}
+
 const TabNavigator = () => {
+    const { tabConstants } = useTabHooks();
+
     return (
-        <Tab.Navigator screenOptions={{ headerShown: false }} initialRouteName={TabConstants.MainScreen} tabBar={props => <CustomTabBar {...props} />}>
-            <Tab.Screen name={TabConstants.MainScreen} component={AppNavigator} />
+        <Tab.Navigator screenOptions={{ headerShown: false }} initialRouteName={tabConstants.CONST_MAIN} tabBar={props => <CustomTabBar {...props} />}>
+            <Tab.Screen name={tabConstants.CONST_MAIN} component={MainScreen} />
+            <Tab.Screen name={tabConstants.CONST_SPORTS} component={SportsScreen} />
+            <Tab.Screen name={tabConstants.CONST_INTERACTION} component={InteractionScreen} />
         </Tab.Navigator>
     );
 };
@@ -27,7 +50,9 @@ const CustomTabBar: FunctionComponent<BottomTabBarProps> = ({
     state,
     navigation,
 }) => {
-    const { themeData } = useTheme()
+    const { themeData } = useTheme();
+    const { tabConstants } = useTabHooks();
+
     const style = useThemeAwareObject(customStyle);
     return (
         <View style={[style.bottomBar, { backgroundColor: themeData.primaryWhite }]}>
@@ -40,14 +65,50 @@ const CustomTabBar: FunctionComponent<BottomTabBarProps> = ({
                     }
                 };
 
+                const getImageName = (): ImagesName => {
+                    let ImageName: ImagesName = ImagesName.MainUnselectedIcon;
+                    switch (route.name) {
+                        case tabConstants.CONST_MAIN:
+                            ImageName = isFocused ? ImagesName.MainUnselectedIcon : ImagesName.MainUnselectedIcon
+                            break;
+                        case tabConstants.CONST_SPORTS:
+                            ImageName = isFocused ? ImagesName.SportsUnselectedIcon : ImagesName.SportsUnselectedIcon
+                            break;
+                        case tabConstants.CONST_INTERACTION:
+                            ImageName = isFocused ? ImagesName.InteractionUnselectedIcon : ImagesName.InteractionUnselectedIcon
+                            break;
+                    }
+                    return ImageName;
+                }
+
+                const getIconStyle = (): any => {
+                    let iconStyle: any = style.tabIcon;
+                    switch (route.name) {
+                        case tabConstants.CONST_MAIN:
+                            iconStyle = style.homeIcon
+                            break;
+                    }
+                    return iconStyle;
+                }
+
+                const iconStyle = getIconStyle();
                 return (
                     <View key={index}>
                         <TouchableOpacity
                             key={index}
+                            style={{ alignItems: 'center' }}
                             onPress={() => onPress()}>
+                            <View style={style.tabIconContainer}>
+                                {(getSvgImages({
+                                    name: getImageName(),
+                                    width: iconStyle.width,
+                                    height: iconStyle.height,
+                                    style: iconStyle
+                                }))}
+                            </View>
                             <Label color={isFocused ? colors.greenishBlue : colors.lightToneGreen}
-                                labelType={'label10'}
                                 children={route.name}
+                                style={style.title}
                             />
                         </TouchableOpacity>
                     </View>
@@ -61,10 +122,10 @@ const customStyle = (theme: CustomThemeType) => {
     const TabNavigatorStyle = StyleSheet.create({
         bottomBar: {
             width: "100%",
-            height: isTab ? 93 : 80,
+            height: 97,
             flexDirection: "row",
             justifyContent: "space-evenly",
-            paddingTop: isTab ? 20 : 15,
+            paddingTop: 27,
             borderColor: "transparent",
             shadowColor: theme.primaryBlack,
             shadowOffset: { width: 0, height: 1 },
@@ -79,40 +140,17 @@ const customStyle = (theme: CustomThemeType) => {
             marginBottom: normalize(2),
         },
         tabIcon: {
-            width: 20,
-            height: 20
+            width: 21,
+            height: 21,
         },
-        favoriteIcon: {
-            width: normalize(12),
-            height: normalize(17),
-            marginTop: isIOS ? normalize(2) : normalize(5)
-        },
-        newsIcon: {
-            width: normalize(31),
-            height: normalize(22),
-        },
-        mostReadIcon: {
-            width: normalize(17),
-            height: normalize(22)
-        },
-        sectionsIcon: {
+        homeIcon: {
             width: normalize(20),
-            height: normalize(20)
-        },
-        latestNewsIcon: {
-            width: normalize(18),
             height: normalize(21)
         },
-        newsDownloadIconActive: {
-            tintColor: colors.greenishBlue
+        title: {
+            fontSize: 12,
+            lineHeight: 30,
         },
-        newsDownloadIcon: {
-            tintColor: colors.lightToneGreen
-        },
-        myNewsIconStyle: {
-            width: normalize(26),
-            height: normalize(22)
-        }
     })
     return TabNavigatorStyle;
 }

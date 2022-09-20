@@ -1,11 +1,15 @@
 import {
-  MainScreen
+  MainScreen,
+  SportsScreen,
+  InteractionScreen,
 } from '../components/screens';
 import AppNavigator from 'src/navigation/AppNavigator';
 
 export const Routes = {
   AppNavigator,
   MainScreen,
+  SportsScreen,
+  InteractionScreen,
 };
 
 /**
@@ -16,14 +20,8 @@ export const Routes = {
 export type ScreenList = {
   AppNavigator: undefined;
   MainScreen: undefined;
+  SportsScreen: undefined;
+  InteractionScreen: undefined;
 };
 
 export type ScreenName = keyof undefined;
-
-const appNavigator = 'appNavigator' as ScreenName;
-const mainScreen = 'mainScreen' as ScreenName;
-
-export const RoutesName = {
-  appNavigator,
-  mainScreen,
-};

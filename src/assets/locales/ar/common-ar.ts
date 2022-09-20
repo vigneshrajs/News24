@@ -49,4 +49,9 @@ export const arabic = {
     fromThreeHours: "من ثلاث ساعات",
     minute: "دقيقة",
   },
+  tabConstant: {
+    main: 'الرئيسية',
+    sports: 'رياضة',
+    interaction: 'تفاعل',
+  }
 }

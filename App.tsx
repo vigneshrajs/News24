@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native';
 import React from 'react';
 import 'src/i18n';
 import AppStackContainer from './src/navigation/AppStackContainer';

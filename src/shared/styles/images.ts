@@ -1,11 +1,11 @@
-
 export enum ImagesName {
+    AppLogo = 'appLogo',
+    SerachIcon = 'serachIcon',
+    MenuIcon = 'menuIcon',
 }
 
 
-export const images = {
-    
-};
+export const images = {};
 
 export const darkImages = {
     ...images,

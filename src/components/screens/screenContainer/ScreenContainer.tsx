@@ -1,15 +1,26 @@
-import { SafeAreaView, StyleSheet } from 'react-native'
-import React from 'react'
+import { SafeAreaView, StyleSheet } from 'react-native';
+import React from 'react';
+import { Header } from 'src/components/molecules';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
 
 type ScreenContainerProps = {
-    children: any
+    children: any,
+    showHeader?: boolean;
 }
 
 export const ScreenContainer = ({
     children,
+    showHeader = true,
 }: ScreenContainerProps) => {
+    const navigation = useNavigation<any>();
+
+    const onPressRightIcon = () => {
+        navigation.dispatch(DrawerActions.toggleDrawer());
+    }
+
     return (
         <SafeAreaView style={style.container}>
+            {showHeader && <Header onPressRightIcon={onPressRightIcon} />}
             {children}
         </SafeAreaView>
     )

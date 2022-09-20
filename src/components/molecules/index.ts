@@ -1,0 +1,1 @@
+export { Header } from 'src/components/molecules/header/Header';
